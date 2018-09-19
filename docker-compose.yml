@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  tube-server:
+    image: tube-server:stable
+    build:
+      context: .
+    networks:
+      - tube-network
+    ports:
+      - 8000:8000
+    command: --server
+    env_file:
+      - docker/vars.env
+    depends_on:
+      - tube-db-server
+
+  tube-worker:
+    image: tube-worker:stable
+    build:
+      context: .
+    networks:
+      - tube-network
+    command: --worker
+    env_file:
+      - docker/vars.env
+    depends_on:
+      - tube-db-server
+      - tube-redis-server
+
+  tube-db-server:
+    image: postgres:latest
+    volumes:
+      - tube-volume:/tube_db
+    networks:
+      - tube-network
+    env_file:
+      - docker/vars.env
+
+  tube-redis-server:
+    image: redis:latest
+    networks:
+      - tube-network
+
+networks:
+  tube-network:
+
+volumes:
+  tube-volume:
