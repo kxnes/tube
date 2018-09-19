@@ -8,12 +8,12 @@ class YoutubeVideo(models.Model):
         ordering = ('video_id', )
 
     def __str__(self):
-        return self.video_id
+        return 'https://www.youtube.com/watch?v={}'.format(self.video_id)
 
 
 class Keyword(models.Model):
     key_word = models.CharField(max_length=128, verbose_name='Keyword', unique=True)
-    videos = models.ManyToManyField(to='YoutubeVideo', related_name='keyboards', verbose_name='YouTube video')
+    videos = models.ManyToManyField(to='YoutubeVideo', related_name='keyboards', verbose_name='Youtube video')
 
     class Meta:
         ordering = ('key_word', )

@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.utils.html import format_html_join
+from django.utils.safestring import mark_safe
 
 from .models import Keyword, YoutubeVideo
 
@@ -8,13 +10,12 @@ class YoutubeVideoAdmin(admin.ModelAdmin):
     pass
 
 
-class VideoInline(admin.TabularInline):
-    model = Keyword.videos.through
-    extra = 0
-
-
 @admin.register(Keyword)
 class KeywordAdmin(admin.ModelAdmin):
-    inlines = (VideoInline, )
     exclude = ('videos', )
     search_fields = ('key_word', )
+    readonly_fields = ('videos_inline', )
+
+    def videos_inline(self, obj=None):
+        return format_html_join(mark_safe('<br>'), '{}', ((line,) for line in obj.videos.all()))
+    videos_inline.short_description = 'Videos'

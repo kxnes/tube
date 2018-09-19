@@ -30,5 +30,7 @@ class KeywordViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Dest
         return response.Response({
             'key_word': keyword.key_word,
             'id': keyword.pk,
-            'urls': list(map(lambda v: 'https://www.youtube.com/watch?v=' + v, [v.video_id for v in videos]))
+            'urls': [
+                'https://www.youtube.com/watch?v='.format(v) for v in keyword.videos.values_list('video_id', flat=True)
+            ]
         })

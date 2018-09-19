@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
 
 wait_for_service() {
     python ${PWD}/docker/wait_for_service.py "$1"
@@ -42,7 +42,7 @@ run_worker() {
     configure_local_settings
     wait_for_service db
     wait_for_service redis
-    migrate
+    wait_for_service server
     celery -A src.app beat --detach
     celery -A src.app worker
 }
