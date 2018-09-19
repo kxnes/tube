@@ -27,7 +27,7 @@ migrate() {
 }
 
 create_admin() {
-    python ${PWD}/manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', '', 'admin')"
+    python ${PWD}/manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', '', 'admin')" &> /dev/null || true
 }
 
 run_server() {

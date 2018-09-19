@@ -105,7 +105,6 @@ REST_FRAMEWORK = {
 
 # == Celery == #
 
-
 CELERY_BEAT_SCHEDULE = {
     'search_videos': {
         'task': 'app.tasks.search_videos',

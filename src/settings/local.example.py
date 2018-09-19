@@ -1,6 +1,6 @@
 SECRET_KEY = '_ve^f^b2fc@)t8=p3cm0iw8^ufj!smq7_08rd1na!6h272lt55'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
